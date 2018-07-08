@@ -12,28 +12,17 @@ app.get('/', function(req, res) {
   });
 });
 
-app.post('/', function(req, res) {
-  res.send({
-    "Output": "Hello World!"
-  });
-});
-
-
-
-
 app.get('/models', function(req, res) {
-  let nb = req.query.nb;
-  if(nb) {
-    res.send(
-      utils.GetJSON(config.rdfStore + sparqlModels.LastModels(nb))
-    );  
-  } else {
-    res.send(
-      utils.GetJSON(config.rdfStore + sparqlModels.ModelList())
-    );      
-  }
+  res.send(
+    utils.GetJSON(config.rdfStore + sparqlModels.ModelList())
+  );      
 });
 
+app.get('models/last/:nb', function(req, res) {
+    res.send(
+      utils.GetJSON(config.rdfStore + sparqlModels.LastModels(req.params.nb))
+    );  
+});
 
 
 

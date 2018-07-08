@@ -36,11 +36,6 @@ Resources:
           Properties:
             Path: /
             Method: get
-        PostEvent:
-          Type: Api
-          Properties:
-            Path: /
-            Method: post
         GetEvent:
           Type: Api
           Properties:
@@ -49,5 +44,5 @@ Resources:
         GetEvent:
           Type: Api
           Properties:
-            Path: /models/{nb}
+            Path: /models/last/{nb}
             Method: get
