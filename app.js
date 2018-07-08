@@ -4,7 +4,7 @@ var app = express();
 var config = require('./config');
 var utils = require('./utils');
 
-var sparqlModels = require('queries/sparql-models');
+var sparqlModels = require('./queries/sparql-models');
 
 app.get('/', function(req, res) {
   res.send({
