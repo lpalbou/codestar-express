@@ -41,3 +41,13 @@ Resources:
           Properties:
             Path: /
             Method: post
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /models
+            Method: get
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /models/{nb}
+            Method: get

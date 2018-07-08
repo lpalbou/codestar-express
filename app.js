@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
 
-var config = require('config');
-var utils = require('utils');
+var config = require('./config');
+var utils = require('./utils');
 
 var sparqlModels = require('queries/sparql-models');
 
@@ -22,10 +22,16 @@ app.post('/', function(req, res) {
 
 
 app.get('/models', function(req, res) {
-  let url = config.rdfStore + sparqlModels.ModelList();
-  res.send(
-    utils.GetJSON(url)
-  );
+  let nb = req.query.nb;
+  if(nb) {
+    res.send(
+      utils.GetJSON(config.rdfStore + sparqlModels.LastModels(nb))
+    );  
+  } else {
+    res.send(
+      utils.GetJSON(config.rdfStore + sparqlModels.ModelList())
+    );      
+  }
 });
 
 
