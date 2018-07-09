@@ -25,7 +25,7 @@ Parameters:
 #       Type: Canary10Percent5Minutes
 
 Resources:
-  GOREST_API_Gateway:
+  APIGateway:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
@@ -42,7 +42,7 @@ Resources:
 #            Parameters:
 #              Location: s3://<bucket>/swagger.yaml      
 
-  GOREST_Lambda:
+  LambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
