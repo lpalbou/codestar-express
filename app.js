@@ -21,6 +21,7 @@ prepare = function(url) {
 }
 
 transform = function(data) {
+  console.log("received: ", data);
   var transformed = { };
   return Object.keys(data).forEach(key => {
     transformed[key] = data[key].value;
@@ -50,8 +51,9 @@ app.get('/models', function(req, res) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
-        res.json(transform(JSON.parse(body).results.bindings));
-    }
+//        res.json(transform(JSON.parse(body).results.bindings));
+        res.json(JSON.parse(body).results.bindings);
+}
   });
 });
 
