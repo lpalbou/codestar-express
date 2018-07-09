@@ -7,6 +7,7 @@ var config = require('./config');
 var sparqlModels = require('./queries/sparql-models');
 
 
+// COMMODITY FUNCTIONS
 
 prepare = function(url) {
   var options = {
@@ -21,15 +22,24 @@ prepare = function(url) {
 }
 
 transform = function(data) {
-  console.log("received: ", data);
   var transformed = { };
-  return Object.keys(data).forEach(key => {
+  Object.keys(data).forEach(key => {
     transformed[key] = data[key].value;
   });
-  // return Object.keys(json).map(key => {
-  //   return "{" + key + ":" + json[key].value + "}"
-  // });  
+	return transformed;
 }
+
+transformArray = function(data) {
+  return data.map(elt => {
+    return transform(elt);
+  });
+}
+
+
+
+
+
+// RESOURCES & METHODS
 
 app.get('/', function(req, res) {
   res.send({
@@ -45,21 +55,18 @@ app.get('/toto', function(req, res) {
 
 app.get('/models', function(req, res) {
   let opts = prepare(config.rdfStore + sparqlModels.ModelList());
-  console.log("asked /models", opts);
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
-//        res.json(transform(JSON.parse(body).results.bindings));
-        res.json(JSON.parse(body).results.bindings);
-}
+        res.json(transformArray(JSON.parse(body).results.bindings));
+    }
   });
 });
 
 app.get('/models/:id', function(req, res) {
   let opts = prepare(config.rdfStore + sparqlModels.Model(req.params.id));
-  console.log("asked /models/" + req.params.id, opts);
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
@@ -74,11 +81,12 @@ app.get('models/last/:nb', function(req, res) {
   let opts = prepare(config.rdfStore + sparqlModels.LastModels(req.params.nb));
   console.log("asked /models/last" + req.params.nb, opts);
 
+
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
-        res.json(JSON.parse(body).results.bindings);
+        res.json(transformArray(JSON.parse(body).results.bindings));
     }
   });
 });

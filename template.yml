@@ -49,21 +49,8 @@ Resources:
           Properties:
             Path: /models/{id}
             Method: get
-
-  # This will create another lambda function
-  GetLastModels:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: index.handler
-      Runtime: nodejs6.10
-      Environment:
-        Variables:
-          NODE_ENV: production
-      Role:
-        Fn::ImportValue:
-          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
-      Events:
-        GetResource:
+        # this will create yet another event triggering the same lambda function
+        GetModel:
           Type: Api
           Properties:
             Path: /models/last/{nb}
