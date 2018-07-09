@@ -10,7 +10,7 @@ Globals:
     Timeout: 15
   Api:
     EndpointConfiguration: EDGE
-    Cors: "'www.geneontology.cloud'"
+#    Cors: "'www.geneontology.cloud'"
 
 
 Parameters:
@@ -19,13 +19,14 @@ Parameters:
     Description: AWS CodeStar projectID used to associate new resources to team members
 
 
+
 Resources:
-#  APIGateway:
-#    Type: AWS::Serverless::Api
-#    Properties:
-#      StageName: prod
-#      DefinitionBody:
-#        swagger: 2.0
+  APIGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      DefinitionUri: swagger.yml  
+
 # COULD USE THIS TO DEFINE THE API GATEWAY IN A SWAGGER FILE
 # https://github.com/awslabs/serverless-application-model/blob/master/examples/2016-10-31/api_swagger_cors/template.yaml
 
@@ -47,27 +48,15 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        # API Gateway event to trigger this lambda function
-        GetRoot:
+        ProxyApiRoot:
           Type: Api
           Properties:
+            RestApiId: !Ref APIGateway
             Path: /
-            Method: get
-        # this will create another event triggering the same lambda function
-        GetModels:
+            Method: ANY
+        ProxyApiGreedy:
           Type: Api
           Properties:
-            Path: /models
-            Method: get
-        # this will create yet another event triggering the same lambda function
-        GetModel:
-          Type: Api
-          Properties:
-            Path: /models/{id}
-            Method: get
-        # this will create yet another event triggering the same lambda function
-        GetLastModels:
-          Type: Api
-          Properties:
-            Path: /models/last/{nb}
-            Method: get
+            RestApiId: !Ref APIGateway
+            Path: /{proxy+}
+            Method: ANY
