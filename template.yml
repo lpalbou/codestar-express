@@ -8,9 +8,9 @@ Globals:
     Runtime: nodejs6.10
     MemorySize: 128
     Timeout: 15
-#  Api:
-#    EndpointConfiguration: EDGE
-#    Cors: "'www.geneontology.cloud'"
+  Api:
+    EndpointConfiguration: EDGE
+    Cors: "'www.geneontology.cloud'"
 
 
 Parameters:
@@ -18,22 +18,14 @@ Parameters:
     Type: String
     Description: AWS CodeStar projectID used to associate new resources to team members
 
-# Enable blue/green deployments using this Globals section. For instructions, see the AWS CodeStar User Guide:
-# https://docs.aws.amazon.com/codestar/latest/userguide/how-to-modify-serverless-project.html?icmpid=docs_acs_rm_tr
-#
-# Globals:
-#   Function:
-#     AutoPublishAlias: live
-#     DeploymentPreference:
-#       Enabled: true
-#       Type: Canary10Percent5Minutes
 
 Resources:
 #  APIGateway:
 #    Type: AWS::Serverless::Api
 #    Properties:
 #      StageName: prod
-
+#      DefinitionBody:
+#        swagger: 2.0
 # COULD USE THIS TO DEFINE THE API GATEWAY IN A SWAGGER FILE
 # https://github.com/awslabs/serverless-application-model/blob/master/examples/2016-10-31/api_swagger_cors/template.yaml
 
