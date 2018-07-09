@@ -14,7 +14,7 @@ app.get('/', function(req, res) {
 
 app.get('/toto', function(req, res) {
   res.json({
-    "Output": "Hello World!"
+    "Output": "Hello Toto!"
   });
 });
 
