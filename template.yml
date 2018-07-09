@@ -8,9 +8,9 @@ Globals:
     Runtime: nodejs6.10
     MemorySize: 128
     Timeout: 15
-  Api:
-    EndpointConfiguration: EDGE
-    Cors: "'www.geneontology.cloud'"
+#  Api:
+#    EndpointConfiguration: EDGE
+#    Cors: "'www.geneontology.cloud'"
 
 
 Parameters:
