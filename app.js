@@ -2,38 +2,11 @@ var express = require('express');
 var app = express();
 var request = require('request');
 
-var config = require('./config');
+var utils = require('./utils');
 
 var sparqlModels = require('./queries/sparql-models');
 
 
-// COMMODITY FUNCTIONS
-
-prepare = function(url) {
-  var options = {
-    uri: url,
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/sparql-results+json',
-        'Accept': 'application/json',
-    }
-  };
-  return options;
-}
-
-transform = function(data) {
-  var transformed = { };
-  Object.keys(data).forEach(key => {
-    transformed[key] = data[key].value;
-  });
-	return transformed;
-}
-
-transformArray = function(data) {
-  return data.map(elt => {
-    return transform(elt);
-  });
-}
 
 
 
@@ -43,53 +16,48 @@ transformArray = function(data) {
 
 app.get('/', function(req, res) {
   res.send({
-    "Output": "Hello World!"
+    "message": "Welcome to api.geneontology.cloud"
   });
 });
 
-app.get('/toto', function(req, res) {
-  res.json({
-    "Output": "Hello Toto!"
-  });
-});
 
+keysArrayModels = ["orcids", "names", "groupids", "groupnames"];
 app.get('/models', function(req, res) {
-  let opts = prepare(config.rdfStore + sparqlModels.ModelList());
+  let opts = utils.prepare(sparqlModels.ModelList());
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
-        res.json(transformArray(JSON.parse(body).results.bindings));
+        res.json(utils.transformArray(JSON.parse(body).results.bindings, keysArrayModels));
     }
   });
 });
 
 app.get('/models/:id', function(req, res) {
-  let opts = prepare(config.rdfStore + sparqlModels.Model(req.params.id));
+  let opts = utils.prepare(sparqlModels.Model(req.params.id));
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
-        res.json(transform(JSON.parse(body).results.bindings));
+        res.json(JSON.parse(body).results.bindings);
     }
   });
 });
 
-app.get('models/last/:nb', function(req, res) {
-  let opts = prepare(config.rdfStore + sparqlModels.LastModels(req.params.nb));
-  console.log("asked /models/last" + req.params.nb, opts);
-
+app.get('/models/last/:nb', function(req, res) {
+  let opts = utils.prepare(sparqlModels.LastModels(req.params.nb));
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
-        res.json(transformArray(JSON.parse(body).results.bindings));
+        res.json(utils.transformArray(JSON.parse(body).results.bindings, keysArrayModels));
     }
   });
 });
+
 
 
 

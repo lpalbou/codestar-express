@@ -3,6 +3,15 @@ Transform:
 - AWS::Serverless-2016-10-31
 - AWS::CodeStar
 
+Globals:
+  Function:
+    Runtime: nodejs6.10
+    MemorySize: 128
+    Timeout: 15
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors: "'www.example.com'"
+
 Parameters:
   ProjectId:
     Type: String
@@ -19,11 +28,10 @@ Parameters:
 #       Type: Canary10Percent5Minutes
 
 Resources:
-  GetRoot:
+  GOREST:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      Runtime: nodejs6.10
       Environment:
         Variables:
           NODE_ENV: production
@@ -32,7 +40,7 @@ Resources:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
         # API Gateway event to trigger this lambda function
-        GetResource:
+        GetRoot:
           Type: Api
           Properties:
             Path: /
