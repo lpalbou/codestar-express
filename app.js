@@ -3,21 +3,22 @@ var app = express();
 var request = require('request');
 
 var config = require('./config');
-var utils = require('./utils');
 
 var sparqlModels = require('./queries/sparql-models');
 
 
-var options = {
-  uri: "",
-  method: 'POST',
-  headers: {
-      'Content-Type': 'application/sparql-results+json',
-      'Accept': 'application/json',
-  }
-};
 
-
+prepare = function(url) {
+  var options = {
+    uri: url,
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/sparql-results+json',
+        'Accept': 'application/json',
+    }
+  };
+  return options;
+}
 
 
 app.get('/', function(req, res) {
@@ -33,12 +34,7 @@ app.get('/toto', function(req, res) {
 });
 
 app.get('/models', function(req, res) {
-  res.send(
-    utils.GetJSON(config.rdfStore + sparqlModels.ModelList())
-  );
-  /*
-  let opts = options;
-  opts.uri = config.rdfStore + sparqlModels.ModelList();
+  let opts = prepare(config.rdfStore + sparqlModels.ModelList());
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
@@ -47,13 +43,30 @@ app.get('/models', function(req, res) {
         res.json(JSON.parse(body).results.bindings);
     }
   });
-  */
+});
+
+app.get('/models/:id', function(req, res) {
+  let opts = prepare(config.rdfStore + sparqlModels.Model(req.params.id));
+
+  request(opts, function (error, response, body) {
+    if (error || response.statusCode != 200) {
+        res.send(error);
+    } else {
+        res.json(JSON.parse(body).results.bindings);
+    }
+  });
 });
 
 app.get('models/last/:nb', function(req, res) {
-    res.send(
-      utils.GetJSON(config.rdfStore + sparqlModels.LastModels(req.params.nb))
-    );  
+  let opts = prepare(config.rdfStore + sparqlModels.LastModels(req.params.nb));
+
+  request(opts, function (error, response, body) {
+    if (error || response.statusCode != 200) {
+        res.send(error);
+    } else {
+        res.json(JSON.parse(body).results.bindings);
+    }
+  });
 });
 
 

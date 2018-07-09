@@ -78,6 +78,22 @@ module.exports = {
         ORDER BY DESC(?date)
         `);
         return "?query=" + encoded;
+    },
+
+    Model(id) {
+        var encoded = encodeURIComponent(`
+        PREFIX metago: <http://model.geneontology.org/>
+    
+        SELECT ?subject ?predicate ?object
+        WHERE 
+        {     
+            GRAPH metago:` + id + ` {
+                ?subject ?predicate ?object
+            }      
+        }
+        `);
+        return "?query=" + encoded;
     }
+
 
 }
