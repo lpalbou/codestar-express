@@ -20,6 +20,11 @@ prepare = function(url) {
   return options;
 }
 
+transform = function(json) {
+  return Object.keys(json).map(key => {
+    return "{" + key + ":" + json[key].value + "}"
+  });  
+}
 
 app.get('/', function(req, res) {
   res.send({
@@ -41,7 +46,7 @@ app.get('/models', function(req, res) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
-        res.json(JSON.parse(body).results.bindings);
+        res.json(transform(JSON.parse(body).results.bindings));
     }
   });
 });
@@ -54,7 +59,7 @@ app.get('/models/:id', function(req, res) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
-        res.json(JSON.parse(body).results.bindings);
+        res.json(transform(JSON.parse(body).results.bindings));
     }
   });
 });
