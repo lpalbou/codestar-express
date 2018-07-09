@@ -36,6 +36,11 @@ Resources:
           Properties:
             Path: /
             Method: get
+        GetResource2:
+          Type: Api
+          Properties:
+            Path: /toto
+            Method: get
   GetModels:
     Type: AWS::Serverless::Function
     Properties:

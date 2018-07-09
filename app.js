@@ -12,6 +12,12 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/toto', function(req, res) {
+  res.json({
+    "Output": "Hello World!"
+  });
+});
+
 app.get('/models', function(req, res) {
   res.send(
     utils.GetJSON(config.rdfStore + sparqlModels.ModelList())
