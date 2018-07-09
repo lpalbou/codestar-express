@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var request = require('request');
 
 var config = require('./config');
 var utils = require('./utils');
@@ -7,7 +8,6 @@ var utils = require('./utils');
 var sparqlModels = require('./queries/sparql-models');
 
 
-var request = require('request');
 var options = {
   uri: "",
   method: 'POST',
@@ -33,7 +33,10 @@ app.get('/toto', function(req, res) {
 });
 
 app.get('/models', function(req, res) {
-
+  res.send(
+    utils.GetJSON(config.rdfStore + sparqlModels.ModelList())
+  );
+  /*
   let opts = options;
   opts.uri = config.rdfStore + sparqlModels.ModelList();
 
@@ -44,6 +47,7 @@ app.get('/models', function(req, res) {
         res.json(JSON.parse(body).results.bindings);
     }
   });
+  */
 });
 
 app.get('models/last/:nb', function(req, res) {

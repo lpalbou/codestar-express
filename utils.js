@@ -14,7 +14,7 @@ module.exports = {
             }
         };
 
-         request(options, function (error, response, body) {
+        return request(options, function (error, response, body) {
             if (error || response.statusCode != 200) {
                 return error;
             } else {
