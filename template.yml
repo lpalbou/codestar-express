@@ -44,7 +44,7 @@ Resources:
             Path: /models
             Method: get
         # this will create yet another event triggering the same lambda function
-        GetModels:
+        GetModel:
           Type: Api
           Properties:
             Path: /models/{id}

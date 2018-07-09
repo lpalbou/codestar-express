@@ -35,6 +35,7 @@ app.get('/toto', function(req, res) {
 
 app.get('/models', function(req, res) {
   let opts = prepare(config.rdfStore + sparqlModels.ModelList());
+  console.log("asked /models", opts);
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
@@ -47,6 +48,7 @@ app.get('/models', function(req, res) {
 
 app.get('/models/:id', function(req, res) {
   let opts = prepare(config.rdfStore + sparqlModels.Model(req.params.id));
+  console.log("asked /models/" + req.params.id, opts);
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
@@ -59,6 +61,7 @@ app.get('/models/:id', function(req, res) {
 
 app.get('models/last/:nb', function(req, res) {
   let opts = prepare(config.rdfStore + sparqlModels.LastModels(req.params.nb));
+  console.log("asked /models/last" + req.params.nb, opts);
 
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
