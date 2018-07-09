@@ -9,7 +9,7 @@ var sparqlModels = require('./queries/sparql-models');
 
 var request = require('request');
 var options = {
-  uri: url,
+  uri: "",
   method: 'POST',
   headers: {
       'Content-Type': 'application/sparql-results+json',

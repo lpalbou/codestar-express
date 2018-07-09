@@ -31,16 +31,20 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
+        # API Gateway event to trigger this lambda function
         GetResource:
           Type: Api
           Properties:
             Path: /
             Method: get
+        # this will create another event triggering the same lambda function
         GetResource2:
           Type: Api
           Properties:
             Path: /toto
             Method: get
+
+  # This will create another lambda function
   GetModels:
     Type: AWS::Serverless::Function
     Properties:
@@ -75,20 +79,3 @@ Resources:
           Properties:
             Path: /models/last/{nb}
             Method: get
-
-#      Events:
-#        GetEvent:
-#          Type: Api
-#          Properties:
-#            Path: /
-#            Method: get
-#        GetEvent:
-#          Type: Api
-#          Properties:
-#            Path: /models
-#            Method: get
-#        GetEvent:
-#          Type: Api
-#          Properties:
-#            Path: /models/last/{nb}
-#            Method: get
