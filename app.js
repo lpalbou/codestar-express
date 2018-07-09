@@ -20,10 +20,14 @@ prepare = function(url) {
   return options;
 }
 
-transform = function(json) {
-  return Object.keys(json).map(key => {
-    return "{" + key + ":" + json[key].value + "}"
-  });  
+transform = function(data) {
+  var transformed = { };
+  return Object.keys(data).forEach(key => {
+    transformed[key] = data[key].value;
+  });
+  // return Object.keys(json).map(key => {
+  //   return "{" + key + ":" + json[key].value + "}"
+  // });  
 }
 
 app.get('/', function(req, res) {
