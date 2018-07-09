@@ -8,9 +8,6 @@ Globals:
     Runtime: nodejs6.10
     MemorySize: 128
     Timeout: 15
-  Api:
-    EndpointConfiguration: REGIONAL
-    Cors: "'www.example.com'"
 
 Parameters:
   ProjectId:
@@ -28,7 +25,24 @@ Parameters:
 #       Type: Canary10Percent5Minutes
 
 Resources:
-  GOREST:
+  GOREST_API_Gateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Cors: "'www.geneontology.cloud'"
+      EndpointConfiguration: EDGE
+
+# COULD USE THIS TO DEFINE THE API GATEWAY IN A SWAGGER FILE
+# https://github.com/awslabs/serverless-application-model/blob/master/examples/2016-10-31/api_swagger_cors/template.yaml
+
+#      DefinitionBody:
+#          'Fn::Transform':
+#            Name: 'AWS::Include'
+            # Replace <bucket> with your bucket name
+#            Parameters:
+#              Location: s3://<bucket>/swagger.yaml      
+
+  GOREST_Lambda:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
