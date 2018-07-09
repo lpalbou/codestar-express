@@ -19,11 +19,11 @@ Parameters:
 #       Type: Canary10Percent5Minutes
 
 Resources:
-  HelloWorld:
+  GetRoot:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      Runtime: nodejs4.3
+      Runtime: nodejs6.10
       Environment:
         Variables:
           NODE_ENV: production
@@ -31,18 +31,59 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        GetEvent:
+        GetResource:
           Type: Api
           Properties:
             Path: /
             Method: get
-        GetEvent:
+  GetModels:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetResource:
           Type: Api
           Properties:
             Path: /models
             Method: get
-        GetEvent:
+  GetLastModels:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetResource:
           Type: Api
           Properties:
             Path: /models/last/{nb}
             Method: get
+
+#      Events:
+#        GetEvent:
+#          Type: Api
+#          Properties:
+#            Path: /
+#            Method: get
+#        GetEvent:
+#          Type: Api
+#          Properties:
+#            Path: /models
+#            Method: get
+#        GetEvent:
+#          Type: Api
+#          Properties:
+#            Path: /models/last/{nb}
+#            Method: get
