@@ -29,10 +29,10 @@ Parameters:
 #       Type: Canary10Percent5Minutes
 
 Resources:
-  APIGateway:
-    Type: AWS::Serverless::Api
-    Properties:
-      StageName: prod
+#  APIGateway:
+#    Type: AWS::Serverless::Api
+#    Properties:
+#      StageName: prod
 
 # COULD USE THIS TO DEFINE THE API GATEWAY IN A SWAGGER FILE
 # https://github.com/awslabs/serverless-application-model/blob/master/examples/2016-10-31/api_swagger_cors/template.yaml
