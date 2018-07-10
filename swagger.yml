@@ -425,33 +425,27 @@ definitions:
     properties:
       gocam:
         type: "string"
-        example: "http://model.geneontology.org/5ae3b0f600001669"
       date:
         type: "string"
-        example: "2018-06-20"
       title:
         type: "string"
       orcids:
         type: "array"
         items:
           type: "string"
-          example: "http://orcid.org/0000-0001-5801-1974"
       names:
         type: "array"
         items:
           type: "string"
-          example: "Laurent-Philippe Albou"
       groupids:
         type: "array"
         items:
           type: "string"
-          example: "http://geneontology.org"
       groupnames:
         type: "array"
         items:
           type: "string"
-          example: "GO Central"
-          
+
   GOCAMSummaries:
     type: "array"
     items:
@@ -463,22 +457,18 @@ definitions:
     properties:
       gocam:
         type: "string"
-        example: "http://model.geneontology.org/5ae3b0f600001669"
       goids:
         type: "array"
         items:
           type: "string"
-          example: "http://purl.obolibrary.org/obo/GO_0007389"
       gonames:
         type: "array"
         items:
           type: "string"
-          example: "pattern specification process"
       definitions:
         type: "array"
         items:
           type: "string"
-          example: "Any developmental process that results in the creation of defined areas or spaces within an organism to which cells respond and eventually are instructed to differentiate."
             
   GOCAMsTerms:
     type: "array"
@@ -493,28 +483,23 @@ definitions:
     properties:
       gocam:
         type: "string"
-        example: "http://model.geneontology.org/56aac7ad00000038"
       goclasses:
         type: "array"
         items:
           type: "string"
-          example: "http://purl.obolibrary.org/obo/GO_0008150"
       goids:
         type: "array"
         items:
           type: "string"
-          example: "http://purl.obolibrary.org/obo/GO_0098609"
       gonames:
         type: "array"
         items:
           type: "string"
-          example: "cell-cell adhesion"
       definitions:
         type: "array"
         items:
           type: "string"
-          example: "The attachment of one cell to another cell via adhesion molecules."
-            
+
   GOCAMsAllTerms:
     type: "array"
     items:
@@ -528,16 +513,12 @@ definitions:
     properties:
       name:
         type: "string"
-        example: "GO Central"
       url:
         type: "string"
-        example: "http://geneontology.org"
       members:
         type: "integer"
-        example: "15"
       gocams:
         type: "integer"
-        example: "39"
 
   Groups:
     type: "array"
@@ -555,10 +536,8 @@ definitions:
     properties:
       name:
         type: "string"
-        example: "GO Central"
       url:
         type: "string"
-        example: "http://geneontology.org"
       membersOrcid:
         type: "array"
         items:
@@ -591,23 +570,18 @@ definitions:
     properties:
       orcid:
         type: "string"
-        example: "http://orcid.org/0000-0003-3185-5709"
       name:
         type: "string"
-        example: "Vincent O`Connor"
       organizations:
         type: "array"
         items:
           type: "string"
-          example: "Department of Molecular Neurobiology, Max Planck Institute of Experimental Medicine, Göttingen, Germany"
       affiliations:
         type: "array"
         items:
           type: "string"
-          example: "https://syngo.vu.nl"
       gocams:
         type: "integer"
-        example: "39"
 
   Users:
     type: "array"
@@ -623,34 +597,25 @@ definitions:
         type: "string"
       namespace:
         type: "string"
-        example: "cellular_component"
       definition:
         type: "string"
-        example: "A location, relative to cellular compartments and structures, occupied by a macromolecular machine when it carries out a molecular function."
       comment:
         type: "string"
-        example: "Note that, in addition to forming the root of the cellular component ontology, this term is recommended for use for the annotation of gene products whose cellular component is unknown."
       synonyms:
         type: "array"
         items:
           type: "string"
-          example: "cell or subcellular entity"
       subsets:
         type: "array"
         items:
           type: "string"
-          example: "http://purl.obolibrary.org/obo/go#goslim_chembl"
 
   GOTermRelation:
     type: "object"
     properties:
       relation:
         type: "string"
-        example: "query, child, parent, partOf, regulates, occursIn"
       goid:
         type: "string"
-        example: "http://purl.obolibrary.org/obo/GO_0098595"
       goname:
         type: "string"
-        example: "perivitelline space"
-      
