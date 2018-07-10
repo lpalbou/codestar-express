@@ -10,7 +10,11 @@ Globals:
     Timeout: 15
   Api:
     EndpointConfiguration: EDGE
-    Cors: "'www.geneontology.cloud'"
+    Cors:
+      AllowMethods: "'GET'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+#    Cors: "'www.geneontology.cloud'"
 #    StageName: prod
 
 
