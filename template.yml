@@ -11,10 +11,9 @@ Globals:
   Api:
     EndpointConfiguration: EDGE
     Cors:
-      AllowMethods: "'GET'"
+#      AllowMethods: "'GET'" # If you omit this property, then SAM will automatically allow all the methods configured for each API.
       AllowHeaders: "'*'"
       AllowOrigin: "'*'"
-#    Cors: "'www.geneontology.cloud'"
 #    StageName: prod
 
 
