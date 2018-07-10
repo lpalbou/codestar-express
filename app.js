@@ -76,7 +76,7 @@ app.get('/models/gp', function(req, res) {
   } else {
     opts = utils.prepare(sparqlModels.AllModelsGPs());
   }
-
+    
   request(opts, function (error, response, body) {
     if (error || response.statusCode != 200) {
         res.send(error);
@@ -131,6 +131,7 @@ app.get('/users', function(req, res) {
     if (error || response.statusCode != 200) {
         res.send(error);
     } else {
+        utils.addCORS(res);
         res.json(utils.transformArray(JSON.parse(body).results.bindings, keysArrayUsers));
     }
   });

@@ -45,6 +45,13 @@ module.exports = {
         return options;
     },
 
+
+    addCORS(res) {
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token");
+        res.setHeader("Access-Control-Allow-Methods", "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+    },
+
     /**
      * @param {json}   data         json retrieved from triples
      * @param {Array}  keysArray    the keys that must be taken as [string] and not string
