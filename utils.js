@@ -33,7 +33,7 @@ module.exports = {
      * @param {string}   url         a string URL to populate the options field of request
      */
     prepare(url) {
-        console.log("config: ", config);
+//        console.log("config: ", config);
         var options = {
             uri: config.rdfStore + url,
             method: 'POST',
@@ -69,7 +69,37 @@ module.exports = {
         return data.map(elt => {
             return this.transform(elt, keysArray);
         });
-    }
+    },
 
+
+
+    getOrcid(orcid) {
+        var re = /[\d]+[-][\d]+/;
+
+        var modOrcid = orcid;
+        if (re.test(orcid)) {
+            modOrcid = "http://orcid.org/" + orcid;
+        }
+        modOrcid = "\"" + modOrcid + "\"^^xsd:string";
+        return modOrcid;
+    },
+
+    /* Split the string argument, and if defined, add a prefix & suffix to each splitted string */
+    splitTrim(string, split, prefix, suffix) {
+        if (!prefix)
+            prefix = "";
+        if (!suffix)
+            suffix = "";
+        var array = string.split(split);
+        for (var i = 0; i < array.length; i++) {
+            array[i] = prefix + array[i].trim() + suffix;
+        }
+        return array;
+    },
+
+
+    concat(a, b) {
+        return a + " " + b;
+    }
 
 }
