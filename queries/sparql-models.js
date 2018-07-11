@@ -167,7 +167,7 @@ module.exports = {
         PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
         PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
 
-		SELECT distinct ?gocam ?goclasses ?goids ?gonames ?definition
+		SELECT distinct ?gocam ?goclasses ?goids ?gonames ?definitions
         WHERE 
         {
 		    VALUES ?gocam { ` + models + `}
@@ -353,8 +353,8 @@ module.exports = {
         PREFIX enabled_by: <http://purl.obolibrary.org/obo/RO_0002333>
         PREFIX in_taxon: <http://purl.obolibrary.org/obo/RO_0002162>
 
-        SELECT ?models  (GROUP_CONCAT(distinct ?identifier;separator="` + separator + `") as ?identifiers)
-			        	(GROUP_CONCAT(distinct ?name;separator="` + separator + `") as ?names)
+        SELECT ?models  (GROUP_CONCAT(distinct ?identifier;separator="` + separator + `") as ?gpnames)
+			        	(GROUP_CONCAT(distinct ?name;separator="` + separator + `") as ?gpids)
 
         WHERE 
         {
