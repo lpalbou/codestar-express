@@ -102,8 +102,8 @@ module.exports = {
   
         SELECT  ?gocam ?date ?title (GROUP_CONCAT(?orcid;separator="` + separator + `") AS ?orcids) 
                                     (GROUP_CONCAT(?name;separator="` + separator + `") AS ?names)
-							        (GROUP_CONCAT(distinct ?providedBy;separator="` + separator + `") AS ?groupIDs) 
-							        (GROUP_CONCAT(distinct ?providedByLabel;separator="` + separator + `") AS ?groupNames) 
+							        (GROUP_CONCAT(distinct ?providedBy;separator="` + separator + `") AS ?groupids) 
+							        (GROUP_CONCAT(distinct ?providedByLabel;separator="` + separator + `") AS ?groupnames) 
         
         WHERE 
         {
@@ -298,8 +298,6 @@ module.exports = {
 
 
 
-
-
     AllModelsGOs() {
         // Transform the array in string
         var encoded = encodeURIComponent(`
@@ -312,31 +310,31 @@ module.exports = {
         PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
         PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
 
-		SELECT distinct ?models ?GO_class ?goid ?goname ?definition
+		SELECT distinct ?gocam ?goclasses ?goids ?gonames ?definitions
         WHERE 
         {
   
-  		    GRAPH ?models {
-    			?models metago:graphType metago:noctuaCam  .
+  		    GRAPH ?gocam {
+    			?gocam metago:graphType metago:noctuaCam  .
                 ?entity rdf:type owl:NamedIndividual .
-    			?entity rdf:type ?goid
+    			?entity rdf:type ?goids
             }
   
-            VALUES ?GO_class { BP: MF: CC:  } . 
+            VALUES ?goclasses { BP: MF: CC:  } . 
             # rdf:type faster then subClassOf+ but require filter 			
-            # ?goid rdfs:subClassOf+ ?GO_class .
-    		?entity rdf:type ?GO_class .
+            # ?goids rdfs:subClassOf+ ?goclasses .
+    		?entity rdf:type ?goclasses .
   			
   			# Filtering out the root BP, MF & CC terms
-			filter(?goid != MF: )
-  			filter(?goid != BP: )
-		  	filter(?goid != CC: )
+			filter(?goids != MF: )
+  			filter(?goids != BP: )
+		  	filter(?goids != CC: )
   
   			# then getting their definitions
-    		?goid rdfs:label ?goname .
-  		    ?goid definition: ?definition .
+    		?goids rdfs:label ?gonames .
+  		    ?goids definition: ?definitions .
         }
-		ORDER BY DESC(?models)
+		ORDER BY DESC(?gocam)
         `);
         return "?query=" + encoded;
     },

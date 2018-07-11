@@ -26,7 +26,11 @@ app.get('/', function(req, res) {
 
 keysArrayModels = ["orcids", "names", "groupids", "groupnames"];
 app.get('/models', function(req, res) {
-  utils.fetchAndSend(res, sparqlModels.ModelList(), false, keysArrayModels);
+  if(req.query.start && req.query.size) {
+    utils.fetchAndSend(res, sparqlModels.ModelListRange(req.query.start, req.query.size), false, keysArrayModels);
+  } else {
+    utils.fetchAndSend(res, sparqlModels.ModelList(), false, keysArrayModels);
+  }
 });
 
 app.get('/models/last/:nb', function(req, res) {
@@ -44,7 +48,10 @@ app.get('/models/go', function(req, res) {
       res.send(utils.mergeResults(data, "gocam"));
     });
   } else {
-    utils.fetchAndSend(res, sparqlModels.AllModelsGOs(), false, keysArrayGOs);
+    utils.fetchData(sparqlModels.AllModelsGOs(gocams), keysArrayGOs, (error, data) => {
+      utils.addCORS(res);
+      res.send(utils.mergeResults(data, "gocam"));
+    });
   }
 });
 
@@ -72,7 +79,7 @@ app.get('/models/pmid', function(req, res) {
 
 // must be place at the end (route priority)
 app.get('/models/:id', function(req, res) {
-  utils.fetchAndSend(res, sparqlModels.Model(req.params.id), true);
+  utils.fetchAndSend(res, sparqlModels.Model(req.params.id), false);
 });
 
 
